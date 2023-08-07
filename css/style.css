@@ -1,0 +1,29 @@
+@import "./bootstrap.css";
+@import "./all.css";
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@400;600;700&display=swap");
+tr th {
+  vertical-align: middle;
+}
+tr td {
+  margin: 0 !important;
+  padding: 0 !important;
+  vertical-align: middle;
+}
+tr td.btnContainer {
+  width: 50% !important;
+}
+tr td.showing {
+  vertical-align: middle;
+  padding-right: 10px !important;
+  box-sizing: border-box;
+  width: 35%;
+}
+tr td.base {
+  box-sizing: border-box;
+  padding-inline: 12px !important;
+}
+tr td button {
+  margin-inline: 5px;
+  width: 80px;
+  margin-block: 5px;
+}/*# sourceMappingURL=style.css.map */
