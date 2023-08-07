@@ -2,18 +2,18 @@ var myApp = angular.module("AJS_CRUD_MODAL", []);
 
 myApp.controller("AJS_CRUD_MODAL_Controller", function () {
   let ctrl = this;
-  ctrl.users = {
-    user1: {
+  ctrl.users = [
+    {
       userName: "Kieu Quoc Anh",
       email: "kieuquocanh4@gmail.com",
       fullName: "Kieu Quoc Anh",
     },
-    user2: {
+    {
       userName: "Kieu Quoc Anh1",
       email: "anh3@gmail.com",
       fullName: "Kieu Quoc Anh1",
     },
-  };
+  ];
 
   ctrl.message = "";
   ctrl.clickedKey = ""; // ko cần dùng
@@ -61,12 +61,12 @@ myApp.controller("AJS_CRUD_MODAL_Controller", function () {
       } else {
         console.log("qualified");
 
-        let userOrder = "user" + (Object.keys(ctrl.users).length + 1);
-        ctrl.users[userOrder] = {
+        // let userOrder = "user" + (Object.keys(ctrl.users).length + 1);
+        ctrl.users.push({
           userName: ctrl.newUserName,
           email: ctrl.newEmail,
           fullName: ctrl.newFullName,
-        };
+        });
         ctrl.newUserName = "";
         ctrl.newEmail = "";
         ctrl.newFullName = "";
@@ -78,7 +78,7 @@ myApp.controller("AJS_CRUD_MODAL_Controller", function () {
   })();
 
   (function editingUser() {
-    ctrl.selectEdit = function (userValue, key) {
+    ctrl.selectEdit = function (userValue, index) {
       ctrl.clickedUserValue = { ...userValue };
       console.log(ctrl.clickedUserValue);
 
@@ -89,7 +89,7 @@ myApp.controller("AJS_CRUD_MODAL_Controller", function () {
         } else {
           console.log("qualified");
 
-          ctrl.users[key] = ctrl.clickedUserValue;
+          ctrl.users[index] = ctrl.clickedUserValue;
           $("#editUserClose")[0].click(); // form ok manully click the X button
           ctrl.message = "Edit user successully.";
           $("#editUserForm").removeClass("was-validated");
@@ -105,23 +105,18 @@ myApp.controller("AJS_CRUD_MODAL_Controller", function () {
   })();
 
   (function deleteUser() {
-    ctrl.selectDelete = function (key) {
+    ctrl.selectDelete = function (index) {
       ctrl.yesDelete = function () {
-        delete ctrl.users[key];
-
-        let oldUsers = ctrl.users;
-        ctrl.users = {};
-
-        let i = 1;
-        angular.forEach(oldUsers, function (value, prop) {
-          ctrl.users[`user${i}`] = value;
-          i++;
-        });
+        ctrl.users.splice(index, 1);
 
         ctrl.message = "Deleting user succeeded.";
       };
     };
   })();
+
+  ctrl.resetMessage = function () {
+    ctrl.message = "";
+  };
 });
 
 // myApp.filter("toC", function () {

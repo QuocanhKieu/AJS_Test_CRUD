@@ -41,7 +41,7 @@
         <button
           type="button"
           class="btn-close"
-          data-bs-dismiss=""
+          ng-click="ctrl.resetMessage()"
           aria-label="Close"
         ></button>
       </div>
@@ -60,14 +60,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="(key, userValue) in ctrl.users " class="p-5">
+          <tr ng-repeat="userValue in ctrl.users " class="p-5">
             <th scope="row">{{$index + 1}}.</th>
             <td class="showing base">{{userValue.userName}}</td>
 
             <td class="showing base">{{userValue.email}}</td>
             <td class="btnContainer">
               <button
-                ng-click="ctrl.selectEdit(userValue, key)"
+                ng-click="ctrl.selectEdit(userValue, $index)"
                 class="edit btn btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#editUserModal"
@@ -77,7 +77,7 @@
             </td>
             <td class="btnContainer">
               <button
-                ng-click="ctrl.selectDelete(key)"
+                ng-click="ctrl.selectDelete($index)"
                 class="btn btn-warning"
                 data-bs-toggle="modal"
                 data-bs-target="#deleteUserModal"
