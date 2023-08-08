@@ -2,85 +2,56 @@ var myApp = angular.module("AJS_CRUD_MODAL", []);
 
 myApp.controller("AJS_CRUD_MODAL_Controller", function () {
   let ctrl = this;
-  ctrl.users = [
+  ctrl.products = [
     {
-      userName: "Kieu Quoc Anh",
-      email: "kieuquocanh4@gmail.com",
-      fullName: "Kieu Quoc Anh",
+      productName: "Product One",
+      productPrice: 22.5,
     },
     {
-      userName: "Kieu Quoc Anh1",
-      email: "anh3@gmail.com",
-      fullName: "Kieu Quoc Anh1",
+      productName: "Product Two",
+      productPrice: 15,
     },
   ];
 
   ctrl.message = "";
-  ctrl.clickedKey = ""; // ko cần dùng
-  ctrl.clickedUserValue = {};
+  ctrl.clickedProduct = {};
 
-  ctrl.newUserName = "";
-  ctrl.newEmail = "";
-  ctrl.newFullName = "";
+  ctrl.newProductName = "";
+  ctrl.newProductPrice = "";
 
   (function addingNewUser() {
     ctrl.dismissAddUser = function () {
-      ctrl.newUserName = "";
-      ctrl.newEmail = "";
-      ctrl.newFullName = "";
+      ctrl.newProductName = "";
+      ctrl.newProductPrice = "";
       $("#addUserForm").removeClass("was-validated");
     };
 
     ctrl.addUser = function () {
-      // (function checkValid() {
-      // if (!ctrl.newUserName.length || ctrl.newUserName.length > 50) {
-      //   $("#newUserName").addClass("is-invalid");
-      //   $("#newUserName").removeClass("is-valid");
-      //   $("#newUserName")[0].setCustomValidity("invalid UserName");
-      // } else {
-      //   $("#newUserName").removeClass("is-invalid");
-      //   $("#newUserName").addClass("is-valid");
-      //   $("#newUserName")[0].setCustomValidity("");
-      // }
-      // let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/
-
-      // if (!emailRegex.test(ctrl.newEmail)) {
-      //   $("#newEmail").removeClass("is-valid");
-      //   $("#newEmail").addClass("is-invalid");
-      //   $("#newEmail")[0].setCustomValidity("invalid email");
-      // } else {
-      //   $("#newEmail").addClass("is-valid");
-      //   $("#newEmail").removeClass("is-invalid");
-      //   $("#newEmail")[0].setCustomValidity("");
-      // }
-      // })();
-
       if (!$("#addUserForm")[0].checkValidity()) {
         console.log("disqualified");
         $("#addUserForm").addClass("was-validated");
       } else {
         console.log("qualified");
+        console.log(ctrl.newProductPrice);
 
-        // let userOrder = "user" + (Object.keys(ctrl.users).length + 1);
-        ctrl.users.push({
-          userName: ctrl.newUserName,
-          email: ctrl.newEmail,
-          fullName: ctrl.newFullName,
+        ctrl.products.push({
+          productName: ctrl.newProductName,
+          productPrice: ctrl.newProductPrice,
         });
-        ctrl.newUserName = "";
-        ctrl.newEmail = "";
-        ctrl.newFullName = "";
+
+        ctrl.newProductName = "";
+        ctrl.newProductPrice = "";
         $("#newUserClose")[0].click();
-        ctrl.message = "Adding new user succeeded.";
+        ctrl.message = "Adding new product succeeded.";
         $("#addUserForm").removeClass("was-validated");
       }
     };
   })();
 
   (function editingUser() {
-    ctrl.selectEdit = function (userValue, index) {
-      ctrl.clickedUserValue = { ...userValue };
-      console.log(ctrl.clickedUserValue);
+    ctrl.selectEdit = function (productValue, index) {
+      ctrl.clickedProduct = { ...productValue };
+      console.log(ctrl.clickedProduct);
 
       ctrl.saveEdit = function () {
         if (!$("#editUserForm")[0].checkValidity()) {
@@ -89,7 +60,7 @@ myApp.controller("AJS_CRUD_MODAL_Controller", function () {
         } else {
           console.log("qualified");
 
-          ctrl.users[index] = ctrl.clickedUserValue;
+          ctrl.products[index] = ctrl.clickedProduct;
           $("#editUserClose")[0].click(); // form ok manully click the X button
           ctrl.message = "Edit user successully.";
           $("#editUserForm").removeClass("was-validated");
@@ -98,7 +69,7 @@ myApp.controller("AJS_CRUD_MODAL_Controller", function () {
     };
 
     ctrl.dismissEditModal = function () {
-      ctrl.clickedUserValue = {};
+      ctrl.clickedProduct = {};
 
       $("#editUserForm").removeClass("was-validated");
     };
@@ -106,8 +77,10 @@ myApp.controller("AJS_CRUD_MODAL_Controller", function () {
 
   (function deleteUser() {
     ctrl.selectDelete = function (index) {
+      console.log("here", index);
       ctrl.yesDelete = function () {
-        ctrl.users.splice(index, 1);
+        ctrl.products.splice(index, 1);
+        console.log(ctrl.products);
 
         ctrl.message = "Deleting user succeeded.";
       };

@@ -18,72 +18,79 @@
   </head>
   <body ng-controller="AJS_CRUD_MODAL_Controller as ctrl">
     <div class="container">
-      <hr />
-      <h1>CodeLean Demo CRUD AngularJS</h1>
-
-      <button
-        class="btn btn-info fw-bold my-3"
-        data-bs-toggle="modal"
-        data-bs-target="#addNewUserModal"
-        ng-click="ctrl.resetStatus()"
-      >
-        Add New User
-      </button>
-      <div
-        class="alert alert-success alert-dismissible fade show"
-        role="alert"
-        ng-if="ctrl.message"
-      >
-        <strong
-          ><i class="fa-regular fs-5 fa-circle-check"> </i
-          >{{ctrl.message}}</strong
+      <div class="row">
+        <hr />
+        <h1 class="fs-5 text-secondary">Angular 2 QuickStart</h1>
+        <p
+          class="text-bg-primary fs-5 col-12 d-flex align-items-center py-3 rounded"
         >
+          Current User: Test@Test.com
+        </p>
         <button
-          type="button"
-          class="btn-close"
-          ng-click="ctrl.resetMessage()"
-          aria-label="Close"
-        ></button>
+          class="btn btn-success fw-bold my-3 col-3"
+          data-bs-toggle="modal"
+          data-bs-target="#addNewUserModal"
+          ng-click="ctrl.resetStatus()"
+        >
+          Add Product
+        </button>
+        <div
+          class="alert alert-success alert-dismissible fade show"
+          role="alert"
+          ng-if="ctrl.message"
+        >
+          <strong
+            ><i class="fa-regular fs-5 fa-circle-check"> </i
+            >{{ctrl.message}}</strong
+          >
+          <button
+            type="button"
+            class="btn-close"
+            ng-click="ctrl.resetMessage()"
+            aria-label="Close"
+          ></button>
+        </div>
+        <hr />
       </div>
-      <hr />
     </div>
 
-    <div class="table-responsive container">
-      <table class="table table-striped">
+    <div
+      class="table-responsive container border border-primary border-2 rounded p-0"
+    >
+      <table class="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
+            <th scope="col">Tools</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Product Price</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="userValue in ctrl.users " class="p-5">
-            <th scope="row">{{$index + 1}}.</th>
-            <td class="showing base">{{userValue.userName}}</td>
-
-            <td class="showing base">{{userValue.email}}</td>
-            <td class="btnContainer">
-              <button
-                ng-click="ctrl.selectEdit(userValue, $index)"
-                class="edit btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#editUserModal"
-              >
-                Edit
-              </button>
+          <tr ng-repeat="productValue in ctrl.products " class="p-5">
+            <td>
+              <span ng-click="ctrl.selectEdit(productValue, $index)">
+                <i
+                  class="fa-solid fa-pen-to-square p-2 bg-primary ms-3 mt-2 border rounded text-white cursor-pointer"
+                  role="button"
+                  class="edit btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editUserModal"
+                ></i>
+              </span>
+              <span ng-click="ctrl.selectDelete($index)">
+                <i
+                  role="button"
+                  class="fa-solid fa-trash-can p-2 bg-danger ms-3 mt-2 border rounded text-white cursor-pointer"
+                  class="btn btn-warning"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteUserModal"
+                ></i>
+              </span>
             </td>
-            <td class="btnContainer">
-              <button
-                ng-click="ctrl.selectDelete($index)"
-                class="btn btn-warning"
-                data-bs-toggle="modal"
-                data-bs-target="#deleteUserModal"
-              >
-                Delete
-              </button>
+            <td class="showing base">{{productValue.productName}}</td>
+
+            <td class="showing base">
+              {{productValue.productPrice | number:2 | currency }}
             </td>
           </tr>
         </tbody>
@@ -104,7 +111,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-2" id="exampleModalLabel">
-              Add New User
+              Add New product
             </h1>
             <button
               type="button"
@@ -123,43 +130,22 @@
                   type="text"
                   name="newUserName"
                   id="newUserName"
-                  placeholder="Username của bạn"
-                  maxlength="50"
+                  placeholder="Product Name"
                   required
-                  ng-model="ctrl.newUserName"
+                  ng-model="ctrl.newProductName"
                 />
-                <div class="nameHelper text-primary helper">
-                  Username không quá 50 ký tự.
-                </div>
-                <div class="invalid-feedback">Tên không hợp lệ..</div>
               </div>
               <div class="col-12 second">
                 <input
                   class="form-control my-3"
-                  type="email"
+                  type="number"
                   name="newEmail"
                   id="newEmail"
-                  ng-model="ctrl.newEmail"
+                  ng-model="ctrl.newProductPrice"
                   required
-                  placeholder="Gmail Của Bạn"
+                  placeholder="Price"
+                  max="999"
                 />
-                <div class="emailHelper text-primary helper">
-                  Emai cần chứa hậu tố @gmail.com.
-                </div>
-                <div class="invalid-feedback">Email không hợp lệ.</div>
-              </div>
-
-              <div class="col-12">
-                <input
-                  class="form-control my-3"
-                  type="text"
-                  name="newFullName"
-                  id="newFullName"
-                  placeholder="Họ và tên của bạn"
-                  required
-                  ng-model="ctrl.newFullName"
-                />
-                <div class="invalid-feedback">Họ và tên không hợp lệ.</div>
               </div>
             </form>
           </div>
@@ -169,7 +155,7 @@
               class="btn btn-primary"
               ng-click="ctrl.addUser()"
             >
-              Save User
+              Save Product
             </button>
           </div>
         </div>
@@ -190,7 +176,9 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-2" id="exampleModalLabel">Edit User</h1>
+            <h1 class="modal-title fs-2" id="exampleModalLabel">
+              Edit Product
+            </h1>
             <button
               type="button"
               class="btn-close"
@@ -206,7 +194,7 @@
               <label
                 for="newUserName"
                 class="col-sm-3 col-form-label fs-5 pe-0 text d-flex align-items-center"
-                >User Name</label
+                >Product Name</label
               >
               <div class="col-sm-9 first">
                 <input
@@ -214,55 +202,27 @@
                   type="text"
                   name="newUserName"
                   id="newUserName"
-                  placeholder="Username của bạn"
-                  maxlength="50"
                   required
-                  ng-model="ctrl.clickedUserValue.userName"
+                  ng-model="ctrl.clickedProduct.productName"
                 />
               </div>
-              <div class="nameHelper text-primary helper">
-                Username không quá 50 ký tự.
-              </div>
-              <div class="invalid-feedback">Tên không hợp lệ..</div>
               <!-- --------------- -->
               <label
                 for="newEmail"
                 class="col-sm-3 col-form-label fs-5 pe-0 text d-flex align-items-center"
-                >Email</label
+                >Product Price</label
               >
               <div class="col-sm-9 second">
                 <input
                   class="form-control my-3"
-                  type="email"
+                  type="number"
+                  max="999"
                   name="newEmail"
                   id="newEmail"
-                  ng-model="ctrl.clickedUserValue.email"
+                  ng-model="ctrl.clickedProduct.productPrice"
                   required
-                  placeholder="Gmail Của Bạn"
                 />
               </div>
-              <div class="emailHelper text-primary helper">
-                Emai cần chứa hậu tố @gmail.com.
-              </div>
-              <div class="invalid-feedback">Email không hợp lệ.</div>
-              <!-- --------------------- -->
-              <label
-                for="newFullName"
-                class="col-sm-3 col-form-label fs-5 pe-0 text d-flex align-items-center"
-                >Full Name</label
-              >
-              <div class="col-sm-9">
-                <input
-                  class="form-control my-3"
-                  type="text"
-                  name="newFullName"
-                  id="newFullName"
-                  placeholder="Họ và tên của bạn"
-                  required
-                  ng-model="ctrl.clickedUserValue.fullName"
-                />
-              </div>
-              <div class="invalid-feedback">Họ và tên không hợp lệ.</div>
             </form>
           </div>
           <div class="modal-footer">
@@ -300,7 +260,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <p>Are you sure you want to delete this user?</p>
+            <p>Are you sure you want to delete this product?</p>
           </div>
           <div class="modal-footer">
             <button
