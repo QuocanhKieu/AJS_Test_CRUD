@@ -11,6 +11,14 @@ myApp.controller("AJS_CRUD_MODAL_Controller", function () {
       productName: "Product Two",
       productPrice: 15,
     },
+    {
+      productName: "MoChi",
+      productPrice: 55,
+    },
+    {
+      productName: "Matcha",
+      productPrice: 56,
+    },
   ];
 
   ctrl.message = "";
@@ -91,9 +99,3 @@ myApp.controller("AJS_CRUD_MODAL_Controller", function () {
     ctrl.message = "";
   };
 });
-
-// myApp.filter("toC", function () {
-//   return function (input) {
-//     return input - 273.15;
-//   };
-// });
